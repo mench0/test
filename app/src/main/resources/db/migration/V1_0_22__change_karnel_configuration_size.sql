@@ -1,0 +1,1 @@
+ALTER TABLE contactless_app ALTER COLUMN kernel_configuration TYPE varchar(3);

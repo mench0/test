@@ -1,0 +1,2 @@
+﻿alter table if exists terminal_acquirer_params_operations_mapping
+alter column operation_order drop not null;

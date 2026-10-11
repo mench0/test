@@ -1,0 +1,19 @@
+UPDATE acquirer_available_operations_mapping SET operation = 'CASH' WHERE operation = 'CASHOUT';
+UPDATE acquirer_available_operations_mapping SET operation = 'PRE_AUTH' WHERE operation = 'PREAUTH';
+UPDATE acquirer_available_operations_mapping SET operation = 'PAYMENT' WHERE operation = 'PAYMENTS';
+UPDATE acquirer_available_operations_mapping SET operation = 'MINI_STATEMENT' WHERE operation = 'MINISTATEMENT';
+UPDATE acquirer_available_operations_mapping SET operation = 'PIN_CHANGE' WHERE operation = 'PINCHANGE';
+UPDATE acquirer_available_operations_mapping SET operation = 'PIN_NEW' WHERE operation = 'PINNEW';
+UPDATE acquirer_available_operations_mapping SET operation = 'PRE_AUTH' WHERE operation = 'PREAUTH';
+UPDATE acquirer_available_operations_mapping SET operation = 'CASH_IN' WHERE operation = 'CASHIN';
+UPDATE acquirer_available_operations_mapping SET operation = 'SALE_CASHBACK' WHERE operation = 'CASHBACK';
+
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'CASH' WHERE operation = 'CASHOUT';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'PRE_AUTH' WHERE operation = 'PREAUTH';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'PAYMENT' WHERE operation = 'PAYMENTS';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'MINI_STATEMENT' WHERE operation = 'MINISTATEMENT';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'PIN_CHANGE' WHERE operation = 'PINCHANGE';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'PIN_NEW' WHERE operation = 'PINNEW';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'PRE_AUTH' WHERE operation = 'PREAUTH';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'CASH_IN' WHERE operation = 'CASHIN';
+UPDATE terminal_acquirer_params_operations_mapping SET operation = 'SALE_CASHBACK' WHERE operation = 'CASHBACK';

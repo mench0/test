@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Terminals Count="1">
+    <Terminal CopyFromID="00000021">
+        <MFO>00959</MFO>
+        <SERIAL_NR>ERA933507993768</SERIAL_NR>
+        <MERCHANT>
+            <NAME>YTT "ABDURAZAKOV ZOIR TOIROVICH"</NAME>
+            <TERM_TYPE>POS</TERM_TYPE>
+            <MID>009590482830501</MID>
+            <MCC>5999</MCC>
+            <TID>01116769</TID>
+            <CITY>TOSHKENT</CITY>
+            <STREET>BIRLASHGAN 2-TOR KO'CHASI 4-UY</STREET>
+            <TTYPE>U</TTYPE>
+        </MERCHANT>
+        <STATUS_DATE>21-Aug-20</STATUS_DATE>
+        <BANK_COD>01</BANK_COD>
+        <BRANCH_COD>009</BRANCH_COD>
+    </Terminal>
+</Terminals>

@@ -1,0 +1,7 @@
+server.tomcat.threads.max: ${MAX_THREADS:20}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}/${DATASOURCE_DATABASE:profile_manager}
+    username: ${DATASOURCE_USER:tms}
+    password: ${DATASOURCE_PASSWORD:tms}

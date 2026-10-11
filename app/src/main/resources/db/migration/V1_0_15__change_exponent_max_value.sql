@@ -1,0 +1,1 @@
+ALTER TABLE certificate ALTER COLUMN exponent type varchar(6);

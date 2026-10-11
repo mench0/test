@@ -1,0 +1,3 @@
+UPDATE terminal
+SET type = 'UNATTENDENT_25'
+WHERE type = 'UNATTENDENT';

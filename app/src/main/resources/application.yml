@@ -1,0 +1,271 @@
+app:
+  reset-password-url: ${RESET_PASSWORD_URL:https://underfined-reset-password-url}
+  caches:
+    payment-system-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_PAYMENT_SYSTEM:1h} # just in case
+    acquirer-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_ACQUIRER:1h} # just in case
+    card-ranges-by-acquirer-id:
+      enabled: true
+      max-number-of-elements: 1000
+      ttl: ${TTL_CARD_RANGE:1h} # just in case
+    vendor-model-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_VENDOR_MODEL:1h} # just in case
+    certificates-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CERTIFICATE:1h} # just in case
+    emv-apps-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_EMV_APPS:1h} # just in case
+    contactless-apps-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CONTACTLESS_APPS:1h} # just in case
+    payment-types:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_PAYMENT_TYPE:1h} # just in case
+    humo-settings:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_HUMO_SETTINGS:1h} # just in case
+    limits-by-ids:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_LIMITS-BY-IDS:1h} # just in case
+    card-type:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_TYPE:1h} # just in case
+    card-bin-range:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_BIN_RANGE:1h} # just in case
+    card-code:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_CODE:1h} # just in case
+    receipt-template-by-merchant-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CHECK_TEMPLATE:1h} # just in case
+    skapps-token:
+      enabled: true
+      max-number-of-elements: 100
+    payment-screen-logo-image-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_:1h} # just in case
+
+
+spring:
+  application:
+    name: profile-manager
+  main:
+    banner-mode: off
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      idle-timeout: 60000
+      minimum-idle: 0
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        check_nullability: true
+        query:
+          in_clause_parameter_padding: true
+          fail_on_pagination_over_collection_fetch: true
+    open-in-view: false
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    redisson:
+      config: |
+        singleServerConfig:
+          address: "redis://${spring.redis.host}:${spring.redis.port}"
+          password: ${spring.redis.password:}
+          connectionMinimumIdleSize: 10
+          connectionPoolSize: 64
+  sleuth:
+    jdbc:
+      datasource-proxy:
+        enabled: ${JDBC_TRACING_ENABLED:false}
+        query:
+          enable-logging: false
+      includes:
+        - CONNECTION
+        - QUERY
+        - FETCH
+    sampler:
+      probability: ${TRACING_SAMPLING_PROBABILITY:0} # from 0.00 to 1.00
+  zipkin:
+    base-url: ${ZIPKIN_BASE_URL:http://localhost:9411/}
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enabled: true
+
+  mail:
+    host: ${EMAIL_HOST:smtp.gmail.com}
+    port: ${EMAIL_PORT:587}
+    username: ${EMAIL_USERNAME:tmsskapps@gmail.com}
+    password: ${EMAIL_PASSWORD:kyfewgqmcefpkddc}
+    from: ${EMAIL_FROM:tms@uzcard.uz}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+
+security:
+  admin:
+    default-email: ${ADMIN_DEFAULT_EMAIL:tmsskapps@gmail.com}
+    # if default password is null then password will be generated and sent to admin email
+    default-password: ${ADMIN_DEFAULT_PASSWORD:#{null}}
+  system-user:
+    username: default_system_user
+    password: dxzW9mWvPFBCQ7eEJbm0sIfsd78sn4
+    default-terminal-password: axzW95WvPFnCQ7eE2bm0sIfsd18sn0
+  jwt:
+    secret: ${JWT_SECRET}
+
+cors:
+  allowed-origin-patterns: ${CORS_ALLOWED_ORIGINS:*}
+  allow-credentials: ${CORS_ALLOW_CREDENTIALS:false}
+
+
+integration:
+  rkl:
+    custom-url-required: ${RKL_CUSTOM_URL_REQUIRED:true}
+    default-request-url: ${RKL_REQUEST-URL:https://undefined-rkl-url}
+    add-url-to-device-view: ${RKL_ADD_URL_TO_DEVICE_VIEW:false}
+  skapps:
+    user: ${SKAPPS_USER:skappTms}
+    password: ${SKAPPS_PASSWORD:uh^567(*g$12hv}
+    host: ${SKAPPS_HOST:skapps-back.smartsoft.am}
+    auth-path: ${SKAPPS_AUTH_PATH:/api/v1/auth/tms/sign-in}
+    terminal-path: ${SKAPPS_TERMINAL_PATH:/api/v1/tms/terminals}
+    merchant-path: ${SKAPPS_MERCHANT_PATH:/api/v1/tms/merchants}
+    job:
+      shedlock: ${SKAPPS_SHEDLOCK:true}
+      fixed-delay: ${SKAPPS_SCHEDULER_FIXED_DELAY_IN_MILLIS:10000}
+  response-timeout: ${RESPONSE_TIMEOUT:PT10S}
+  connection-timeout: ${CONNECTION_TIMEOUT:PT10S}
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      getTerminalExtendedInfo:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        sliding-window-type: TIME_BASED
+        sliding-window-size: 10 # seconds
+        minimum-number-of-calls: 100
+        record-failure-predicate: com.tms.profilemanager.app.utils.CircuitBreakerExceptionPredicate
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+      slo:
+        "[http.server.requests]": 500ms, 2s, 5s
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          show-details: always
+          include:
+            - livenessState
+        readiness:
+          show-details: always
+          include:
+            - readinessState
+            - migrations
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    docExpansion: none
+    filter: true
+    tagsSorter: alpha
+    displayRequestDuration: true
+    disable-swagger-default-url: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+logbook:
+  log-request-body: true
+  log-successful-requests: true
+  secure-filter:
+    enabled: false
+
+logging:
+  level:
+    org.zalando.logbook: trace
+
+humo:
+  humo-acquirer-name: ${HUMO_ACQUIRER_NAME:Humo}
+  enable: ${HUMO_ENABLE:false}
+  job:
+    shedlock: ${HUMO_SHEDLOCK:true}
+    scheduler: ${HUMO_SCHEDULER_CRON:0 */5 * * * *}
+
+multimerchant:
+  disabled-acquirers: ${DISABLED_ACQUIRERS:Humo}
+  disabled-softwares: ${DISABLED_SOFTWARES:Era POS}
+
+skapps:
+  content-types: ${SKSAPPS_FILES_CONTENT_TYPES:image/png,image/jpg,image/svg+xml}
+  file-size: ${FILE_SIZE:300KB}
+
+payment-screen-logo:
+  content-types: ${LOGO_FILES_CONTENT_TYPES:image/png,image/jpg,image/svg+xml}
+  max-file-size: ${LOGO_MAX_FILE_SIZE:300KB}
+  image-cache-ttl: ${LOGO_IMAGE_CACHE_TTL:1h}
+
+minio:
+  url: ${MINIO_URL:https://minio-tms-api-dev.sksoldev.com/}
+  accessKey: ${MINIO_ACCESS_KEY:minio}
+  secretKey: ${MINIO_SECRET_KEY:vY7z9B3u7WhY}
+  humo:
+    bucket: ${HUMO_MINIO_BUCKET:sync}
+    errorBucket: ${HUMO_MINIO_ERROR_BUCKET:error}
+    rejectBucket: ${HUMO_MINIO_REJECT_BUCKET:reject}
+    maxKeys: ${HUMO_MINIO_MAX_FILES:1000}
+  skapps:
+    bucket: ${SKAPPS_MINIO_BUCKET:skapps}
+  payment-screen-logo:
+    bucket: ${LOGO_MINIO_BUCKET:logo}

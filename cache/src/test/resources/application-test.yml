@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: test-app
+
+app:
+  caches:
+    test-records-cache:
+      enabled: true
+      eviction-policy: NONE           # just for example
+      sync-strategy: UPDATE           # just for example
+      reconnection-strategy: NONE     # just for example
+      ttl: PT1M                       # just for example
+      max-number-of-elements: 1       # just for example
+    test-records-by-category-id-cache:
+      enabled: true
+    test-record-by-id-cache:
+      enabled: true
+    category-id-cache:
+      enabled: true

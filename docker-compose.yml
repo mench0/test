@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: "postgres:11-alpine"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=profile_manager
+      - POSTGRES_USER=tms
+      - POSTGRES_PASSWORD=tms
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U credentials"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  redis:
+    image: redis:8.2.3
+    ports:
+      - "6379:6379"
+    command: redis-server
+volumes:
+  postgres-data:

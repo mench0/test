@@ -1,0 +1,5 @@
+ALTER TABLE emv_app ADD COLUMN IF NOT EXISTS terminal_type VARCHAR(100);
+ALTER TABLE contactless_app ADD COLUMN IF NOT EXISTS terminal_type VARCHAR(100);
+UPDATE terminal
+SET type = 'ATTENDENT_22'
+WHERE type = 'RETAIL';

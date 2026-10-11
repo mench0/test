@@ -1,0 +1,1 @@
+ALTER TABLE terminal ADD COLUMN default_terminal_type VARCHAR(100) not null default 'ATTENDENT_22';

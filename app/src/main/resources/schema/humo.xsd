@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Terminals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Terminal" type="terminal" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="Count" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="terminal">
+        <xs:sequence>
+            <xs:element name="MFO" type="xs:string"/>
+            <xs:element name="SERIAL_NR">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-Za-z0-9_\-.]{3,50}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MERCHANT" type="MERCHANT"/>
+            <xs:element name="STATUS_DATE" type="xs:string"/>
+            <xs:element name="BANK_COD" type="bankType"/>
+            <xs:element name="BRANCH_COD" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="CopyFromID" type="xs:string"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="MERCHANT">
+        <xs:sequence>
+            <xs:element name="NAME">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="255"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="TERM_TYPE" type="xs:string"/>
+            <xs:element name="MID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9A-Z]{1,15}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MCC">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="TID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9A-Z]{1,8}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CITY" type="xs:string"/>
+            <xs:element name="STREET" type="xs:string"/>
+            <xs:element name="TTYPE" type="operationType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="operationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="I"/>
+            <xs:enumeration value="U"/>
+            <xs:enumeration value="D"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="bankType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="01"/>
+            <xs:enumeration value="02"/>
+            <xs:enumeration value="03"/>
+            <xs:enumeration value="04"/>
+            <xs:enumeration value="06"/>
+            <xs:enumeration value="08"/>
+            <xs:enumeration value="09"/>
+            <xs:enumeration value="10"/>
+            <xs:enumeration value="12"/>
+            <xs:enumeration value="13"/>
+            <xs:enumeration value="14"/>
+            <xs:enumeration value="15"/>
+            <xs:enumeration value="16"/>
+            <xs:enumeration value="17"/>
+            <xs:enumeration value="18"/>
+            <xs:enumeration value="19"/>
+            <xs:enumeration value="20"/>
+            <xs:enumeration value="21"/>
+            <xs:enumeration value="23"/>
+            <xs:enumeration value="24"/>
+            <xs:enumeration value="25"/>
+            <xs:enumeration value="26"/>
+            <xs:enumeration value="27"/>
+            <xs:enumeration value="28"/>
+            <xs:enumeration value="29"/>
+            <xs:enumeration value="30"/>
+            <xs:enumeration value="31"/>
+            <xs:enumeration value="32"/>
+            <xs:enumeration value="33"/>
+            <xs:enumeration value="34"/>
+            <xs:enumeration value="35"/>
+            <xs:enumeration value="36"/>
+            <xs:enumeration value="37"/>
+            <xs:enumeration value="38"/>
+            <xs:enumeration value="39"/>
+            <xs:enumeration value="40"/>
+            <xs:enumeration value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
+

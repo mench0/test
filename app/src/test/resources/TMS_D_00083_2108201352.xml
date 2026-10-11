@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Terminals Count="1">
+    <Terminal CopyFromID="00000028">
+        <MFO>00083</MFO>
+        <SERIAL_NR>ERA932510142018</SERIAL_NR>
+        <MERCHANT>
+            <NAME>YATT ISAQOV SHAVKATBEK</NAME>
+            <TERM_TYPE>POS</TERM_TYPE>
+            <MID>000830099836902</MID>
+            <MCC>5999</MCC>
+            <TID>161107XY</TID>
+            <CITY>Andijon</CITY>
+            <STREET>Andijon</STREET>
+            <TTYPE>D</TTYPE>
+        </MERCHANT>
+        <STATUS_DATE>21-Aug-20</STATUS_DATE>
+        <BANK_COD>16</BANK_COD>
+        <BRANCH_COD>002</BRANCH_COD>
+    </Terminal>
+</Terminals>

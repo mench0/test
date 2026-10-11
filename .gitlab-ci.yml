@@ -1,0 +1,89 @@
+services:
+  - docker:dind
+
+# workflow:
+#   rules:
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#     - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"'
+#       when: never
+#     - if: '$CI_COMMIT_BRANCH'
+
+stages:
+  - build
+  - deploy
+  - dockerize
+  - cd
+  - purge
+
+variables:
+  MAVEN_CLI_OPTS: "-s ci_settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+maven-build:
+  image: maven:3.8-openjdk-17
+  stage: build
+  before_script:
+    - export MAX_LOG_SIZE=52428800 # Set log size limit to 50MB
+  script:
+    - mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    expire_in: 1 hrs
+    paths:
+      - app/target/*.jar
+
+maven-deploy:
+  image: maven:3.8-openjdk-17
+  stage: deploy
+  script:
+    - mvn $MAVEN_CLI_OPTS deploy
+
+docker-build:
+  stage: dockerize
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
+    - docker push "$CI_REGISTRY_IMAGE${tag}"
+  # Run this job in a branch where a Dockerfile exists
+  only:
+    - develop
+    - test
+    - optimization
+    - tags
+
+
+deploy:
+  stage: cd
+  image: git.sksoldev.com:5050/devops/kubectl:sks-local
+  script:
+    - deploy profile-manager tms-dev-back
+  only:
+    - develop
+
+
+purge:
+  stage: purge
+  image: cdue/curl-jq:latest
+  allow_failure: true
+  script:
+    - sh ./gitlab-ci/delete_old_gitlab_packages.sh
+  rules:
+    # For pipelines triggered by changing files tracked by a Merge Request, the purge step will be manual
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    # For pipelines triggered by a change occurring on a different branch than the default one, the purge step will be manual
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      when: manual
+    # For pipelines triggered by a change occurring on the default branch, the purge step will be run automatically
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always

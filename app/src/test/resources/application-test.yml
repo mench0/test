@@ -1,0 +1,97 @@
+app:
+  reset-password-url: ${RESET_PASSWORD_URL:https://underfined-reset-password-url}
+  caches:
+    payment-system-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_PAYMENT_SYSTEM:1h} # just in case
+    acquirer-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_ACQUIRER:1h} # just in case
+    card-ranges-by-acquirer-id:
+      enabled: true
+      max-number-of-elements: 1000
+      ttl: ${TTL_CARD_RANGE:1h} # just in case
+    vendor-model-by-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_VENDOR_MODEL:1h} # just in case
+    certificates-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CERTIFICATE:1h} # just in case
+    emv-apps-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_EMV_APPS:1h} # just in case
+    contactless-apps-by-payment-system-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CONTACTLESS_APPS:1h} # just in case
+    payment-types:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_PAYMENT_TYPE:1h} # just in case
+    humo-settings:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_HUMO_SETTINGS:1h} # just in case
+    limits-by-ids:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_LIMITS-BY-IDS:1h} # just in case
+    card-type:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_TYPE:1h} # just in case
+    card-bin-range:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_BIN_RANGE:1h} # just in case
+    card-code:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CARD_CODE:1h} # just in case
+    receipt-template-by-merchant-id:
+      enabled: true
+      max-number-of-elements: 100
+      ttl: ${TTL_CHECK_TEMPLATE:1h} # just in case
+    skapps-token:
+      enabled: true
+      max-number-of-elements: 1
+      ttl: ${TTL_SKAPPS-TOKEN:1h} # just in case
+
+security:
+  admin:
+    default-email: admin@tms.test
+    default-password: 12345
+  system-user:
+    username: default_system_user
+    password: dxzW9mWvPFBCQ7eEJbm0sIfsd78sn4
+  jwt:
+    secret: 12345
+
+spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  sleuth:
+    jdbc:
+      datasource-proxy:
+        enabled: true
+    sampler:
+      probability: 0
+
+humo:
+  enable: ${HUMO_ENABLE:true}
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      getTerminalExtendedInfo:
+        wait-duration-in-open-state: 1s
+        minimum-number-of-calls: 10

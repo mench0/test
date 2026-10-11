@@ -1,0 +1,45 @@
+app:
+  reset-password-url: ${RESET_PASSWORD_URL:https://underfined-reset-password-url}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost:5432}/${DATASOURCE_DATABASE:profile_manager}
+    username: ${DATASOURCE_USER:tms}
+    password: ${DATASOURCE_PASSWORD:tms}
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+management:
+  health:
+    mail:
+      enabled: false
+
+security:
+  admin:
+    default-password: 12345
+  jwt:
+    secret: 12345
+
+logging:
+  level:
+    root: info
+
+humo:
+  enable: ${HUMO_ENABLE:true}
+  job:
+    shedlock: ${HUMO_SHEDLOCK:true}
+    scheduler: ${HUMO_SCHEDULER_CRON:-}
+  minio:
+    url: ${HUMO_MINIO_URL:https://minio-tms-api-dev.sksoldev.com/}
+    accessKey: ${HUMO_MINIO_ACCESS_KEY:minio}
+    secretKey: ${HUMO_MINIO_SECRET_KEY:vY7z9B3u7WhY}
+    bucket: ${HUMO_MINIO_BUCKET:sync}
+    errorBucket: ${HUMO_MINIO_ERROR_BUCKET:error}
+    rejectBucket: ${HUMO_MINIO_ERROR_BUCKET:reject}
+    maxKeys: ${HUMO_MINIO_MAX_FILES:1000}

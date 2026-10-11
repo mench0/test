@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Terminals Count="1">
+    <Terminal CopyFromID="00000021">
+        <MFO>01124</MFO>
+        <SERIAL_NR>ERA93225153585</SERIAL_NR>
+        <MERCHANT>
+            <NAME>ABCD MCHJ</NAME>
+            <TERM_TYPE>POS</TERM_TYPE>
+            <MID>011240554565852</MID>
+            <MCC>5999</MCC>
+            <TID>09111H4C</TID>
+            <CITY>Toshkent shahar</CITY>
+            <STREET>Bektemir Bektemir</STREET>
+            <TTYPE>I</TTYPE>
+        </MERCHANT>
+        <STATUS_DATE>12-Oct-23</STATUS_DATE>
+        <BANK_COD>09</BANK_COD>
+        <BRANCH_COD>002</BRANCH_COD>
+    </Terminal>
+</Terminals>

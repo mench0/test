@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <appender name="JSON_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <pattern>yyyy-MM-dd' 'HH:mm:ss.SSS</pattern>
+                    <fieldName>localTime</fieldName>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <omitEmptyFields>false</omitEmptyFields>
+                    <pattern>
+                        {
+                        "level": "%level",
+                        "trace": "%X{traceId}",
+                        "span": "%X{spanId}",
+                        "message": "%message",
+                        "loggerName": "%logger",
+                        "threadName": "%thread"
+                        }
+                    </pattern>
+                </pattern>
+                <logLevelValue>
+                    <fieldName>levelInt</fieldName>
+                </logLevelValue>
+                <arguments>
+                    <includeNonStructuredArguments>false</includeNonStructuredArguments>
+                </arguments>
+                <stackTrace>
+                    <fieldName>stack</fieldName>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
+
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t,%X{traceId},%X{spanId}] [%-5level] %X{id} %c{1} - %msg%n"/>
+
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <springProfile name="!(local || test)">
+        <root level="INFO">
+            <appender-ref ref="JSON_APPENDER"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local || test">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+    </springProfile>
+</configuration>
